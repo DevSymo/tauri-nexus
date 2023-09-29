@@ -13,19 +13,45 @@ interface Props {
   children: React.ReactNode;
 }
 
+interface AccountResponse {
+  status: number;
+  data: {
+    account_level: number;
+    card: object;
+    last_update: string;
+    last_update_raw: number;
+    name: string;
+    puuid: string;
+    region: string;
+    tag: string;
+  };
+}
+
+
 export const NavbarWrapper = ({ children }: Props) => {
   const [searchTerm, setSearchTerm] = useState("");
+
 
   const search = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && searchTerm.includes("#")) {
       const [name, tag] = searchTerm.split("#");
-      invoke("get_account", { name, tag })
-        .then((result) => {
-          console.log(result); // log the result to console
-        })
-        .catch((err) => {
-          console.log("An error occurred:", err);
-        });
+      invoke<AccountResponse>("get_account", { name, tag })
+      .then((accountResult) => {
+        console.log(accountResult); // log the accountResult to console
+        if (accountResult.status === 200) {
+          const { region } = accountResult.data;
+          invoke("get_mmr", { affinity: region, name, tag })
+            .then((mmrResult) => {
+              console.log(mmrResult); // log the MMR result to console
+            })
+            .catch((err) => {
+              console.log("An error occurred while fetching MMR:", err);
+            });
+        }
+      })
+      .catch((err) => {
+        console.log("An error occurred:", err);
+      });    
     }
   };
 

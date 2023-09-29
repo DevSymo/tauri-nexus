@@ -25,6 +25,14 @@ async fn get_mmr(affinity: String, name: String, tag: String) -> Result<Value, S
   }
 }
 
+#[tauri::command]
+async fn get_matches(affinity: String, puuid: String, size: String) -> Result<Value, String> {
+  match valo_rik::get_mmr_rik(&affinity, &puuid, &size).await {
+      Ok(value) => Ok(value),
+      Err(e) => Err(e.to_string()),
+  }
+}
+
 // Main function
 fn main() {
   tauri::Builder::default()

@@ -15,3 +15,9 @@ pub async fn get_mmr_rik(affinity: &str, name: &str, tag: &str) -> Result<Value,
     let response = reqwest::get(&url).await?.json().await?;
     Ok(response)
 }
+
+pub async fn get_matches_rik(affinity: &str, puuid: &str, size: &str) -> Result<Value, reqwest::Error> {
+    let url = format!("{}/v3/by-puuid/matches/{}/{}?size={}", BASE_URL, affinity, puuid, size);
+    let response = reqwest::get(&url).await?.json().await?;
+    Ok(response)
+}
