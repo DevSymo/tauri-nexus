@@ -1,6 +1,6 @@
 {
   "name": "valo-nexus",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@nextui-org/react": "2.0.22",
+    "@reduxjs/toolkit": "^1.9.6",
     "@tauri-apps/api": "2.0.0-alpha.8",
     "apexcharts": "^3.35.5",
     "clsx": "^2.0.0",
@@ -18,7 +19,8 @@
     "next-themes": "0.2.1",
     "react": "18.2.0",
     "react-apexcharts": "^1.4.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-redux": "^8.1.2"
   },
   "devDependencies": {
     "@tauri-apps/cli": "2.0.0-alpha.10",

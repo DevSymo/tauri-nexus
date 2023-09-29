@@ -8,6 +8,8 @@ import { invoke } from '@tauri-apps/api/tauri';
 import { BurguerButton } from "./burguer-button";
 import { NotificationsDropdown } from "./notifications-dropdown";
 import { UserDropdown } from "./user-dropdown";
+import { useDispatch } from "react-redux";
+import { setAccountResult, setMmrResult } from "../../store/store";
 
 interface Props {
   children: React.ReactNode;
@@ -27,9 +29,9 @@ interface AccountResponse {
   };
 }
 
-
 export const NavbarWrapper = ({ children }: Props) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const dispatch = useDispatch();
 
 
   const search = (e: React.KeyboardEvent) => {
@@ -37,12 +39,14 @@ export const NavbarWrapper = ({ children }: Props) => {
       const [name, tag] = searchTerm.split("#");
       invoke<AccountResponse>("get_account", { name, tag })
       .then((accountResult) => {
-        console.log(accountResult); // log the accountResult to console
+        //console.log(accountResult); // log the accountResult to console
+        dispatch(setAccountResult(accountResult));
         if (accountResult.status === 200) {
           const { region } = accountResult.data;
           invoke("get_mmr", { affinity: region, name, tag })
             .then((mmrResult) => {
-              console.log(mmrResult); // log the MMR result to console
+              dispatch(setMmrResult(mmrResult));
+              //console.log(mmrResult); // log the MMR result to console
             })
             .catch((err) => {
               console.log("An error occurred while fetching MMR:", err);
