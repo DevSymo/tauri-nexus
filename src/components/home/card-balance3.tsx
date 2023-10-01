@@ -7,7 +7,8 @@ import Head from "../icons/body/head";
 
 export const CardBalance3 = () => {
   return (
-    <Card className="xl:max-w-sm bg-success rounded-xl shadow-md px-3 w-full">
+    <Card 
+    className="xl:max-w-sm rounded-xl shadow-md px-3 w-full" style={{ backgroundImage: 'linear-gradient(to bottom right, #6CFF95, #067D68)' }}>
       <CardBody className="py-5">
         <div className="flex gap-2.5">
           <Community />
@@ -19,13 +20,11 @@ export const CardBalance3 = () => {
         {/* New divs */}
         <div className="flex flex-col mt-4 space-y-2">
           <div className="bg-gray-300 h-10 w-full rounded flex items-center justify-center py-1">
-            <Head />
           </div>
           <div className="bg-gray-400 h-10 w-full rounded flex items-center justify-center py-1">
             <Body />
           </div>
           <div className="bg-gray-500 h-10 w-full rounded flex items-center justify-center py-1">
-            <Legs />
           </div>
         </div>
       </CardBody>
