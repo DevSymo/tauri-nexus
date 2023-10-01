@@ -2,7 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import { TableWrapper } from "../table/table";
 import { CardInfo } from "./card-info";
-import { CardBalance2 } from "./card-balance2";
+import { CardStats } from "./card-stats";
 import { CardBalance3 } from "./card-balance3";
 import { CardRank } from "./card-rank";
 import { CardTransactions } from "./card-transactions";
@@ -25,7 +25,7 @@ export const Content = () => (
           <h3 className="text-xl font-semibold">Account</h3>
           <div className="grid md:grid-cols-3 grid-cols-1 2xl:grid-cols-3 gap-5  justify-center w-full">
             <CardInfo />
-            <CardBalance2 />
+            <CardStats />
             <CardBalance3 />
           </div>
         </div>

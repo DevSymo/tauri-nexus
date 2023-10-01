@@ -22,9 +22,21 @@ const mmrSlice = createSlice({
   },
 });
 
+const matchesSlice = createSlice({
+    name: 'matches',
+    initialState: { matchesResult: null },
+    reducers: {
+      setMatchesResult: (state, action) => {
+        state.matchesResult = action.payload;
+        console.log('Stored matchesResult:', state.matchesResult)
+      },
+    },
+  });
+
 const rootReducer = {
   account: accountSlice.reducer,
   mmr: mmrSlice.reducer,
+  matches: matchesSlice.reducer,
 };
 
 const store = configureStore({
@@ -33,4 +45,5 @@ const store = configureStore({
 
 export const { setAccountResult } = accountSlice.actions;
 export const { setMmrResult } = mmrSlice.actions;
+export const { setMatchesResult } = matchesSlice.actions;
 export default store;

@@ -9,7 +9,7 @@ import { BurguerButton } from "./burguer-button";
 import { NotificationsDropdown } from "./notifications-dropdown";
 import { UserDropdown } from "./user-dropdown";
 import { useDispatch } from "react-redux";
-import { setAccountResult, setMmrResult } from "../../store/store";
+import { setAccountResult, setMatchesResult, setMmrResult } from "../../store/store";
 
 interface Props {
   children: React.ReactNode;
@@ -38,24 +38,29 @@ export const NavbarWrapper = ({ children }: Props) => {
     if (e.key === "Enter" && searchTerm.includes("#")) {
       const [name, tag] = searchTerm.split("#");
       invoke<AccountResponse>("get_account", { name, tag })
-      .then((accountResult) => {
-        //console.log(accountResult); // log the accountResult to console
-        dispatch(setAccountResult(accountResult));
-        if (accountResult.status === 200) {
-          const { region } = accountResult.data;
-          invoke("get_mmr", { affinity: region, name, tag })
-            .then((mmrResult) => {
+        .then((accountResult) => {
+          dispatch(setAccountResult(accountResult));
+          if (accountResult.status === 200) {
+            const { region } = accountResult.data;
+            const { puuid } = accountResult.data;
+            
+            // Get MMR and matches at the same time
+            Promise.all([
+              invoke("get_mmr", { affinity: region, name, tag }),
+              invoke("get_matches", { affinity: region, puuid, size: 20 })
+            ])
+            .then(([mmrResult, matchesResult]) => {
               dispatch(setMmrResult(mmrResult));
-              //console.log(mmrResult); // log the MMR result to console
+              dispatch(setMatchesResult(matchesResult));
             })
             .catch((err) => {
-              console.log("An error occurred while fetching MMR:", err);
+              console.log("An error occurred while fetching data:", err);
             });
-        }
-      })
-      .catch((err) => {
-        console.log("An error occurred:", err);
-      });    
+          }
+        })
+        .catch((err) => {
+          console.log("An error occurred:", err);
+        });    
     }
   };
 

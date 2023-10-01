@@ -7,7 +7,6 @@ export const CardRank = () => {
   const rankImage = mmrResult && mmrResult.data.current_data && mmrResult.data.current_data.currenttierpatched
     ? `https://blitz-cdn-plain.blitz.gg/blitz/val/ranks/${mmrResult.data.current_data.currenttierpatched.replace(/\s+/g, '').toLowerCase()}.svg`
     : ''; // default image URL or empty string
-
   const value = mmrResult?.data?.current_data?.ranking_in_tier || 0; // default to 0 if not available
 
   return (
